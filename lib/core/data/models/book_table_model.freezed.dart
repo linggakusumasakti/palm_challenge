@@ -17,7 +17,7 @@ T _$identity<T>(T value) => value;
 mixin _$BookTableModel {
   int get id;
   String get title;
-  String get authorsJson; // List<AuthorModel> -> JSON string
+  String get authorsJson;
   String get summariesJson;
   String get subjectsJson;
   String get bookshelvesJson;
@@ -205,7 +205,6 @@ class _BookTableModel implements BookTableModel {
   final String title;
   @override
   final String authorsJson;
-// List<AuthorModel> -> JSON string
   @override
   final String summariesJson;
   @override

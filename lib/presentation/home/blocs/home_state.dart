@@ -6,7 +6,10 @@ class HomeState with _$HomeState {
 
   const factory HomeState.loading() = Loading;
 
-  const factory HomeState.loaded(List<Book> books) = Loaded;
+  const factory HomeState.loaded(
+      {required List<Book> books,
+      required int page,
+      required bool hasReachedMax}) = Loaded;
 
   const factory HomeState.error(String message) = Error;
 }

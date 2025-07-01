@@ -38,64 +38,20 @@ class $HomeEventCopyWith<$Res> {
 /// @nodoc
 
 class _FetchBook implements HomeEvent {
-  const _FetchBook({this.page = 1});
-
-  @JsonKey()
-  final int page;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$FetchBookCopyWith<_FetchBook> get copyWith =>
-      __$FetchBookCopyWithImpl<_FetchBook>(this, _$identity);
+  const _FetchBook();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _FetchBook &&
-            (identical(other.page, page) || other.page == page));
+        (other.runtimeType == runtimeType && other is _FetchBook);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, page);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   String toString() {
-    return 'HomeEvent.fetchBook(page: $page)';
-  }
-}
-
-/// @nodoc
-abstract mixin class _$FetchBookCopyWith<$Res>
-    implements $HomeEventCopyWith<$Res> {
-  factory _$FetchBookCopyWith(
-          _FetchBook value, $Res Function(_FetchBook) _then) =
-      __$FetchBookCopyWithImpl;
-  @useResult
-  $Res call({int page});
-}
-
-/// @nodoc
-class __$FetchBookCopyWithImpl<$Res> implements _$FetchBookCopyWith<$Res> {
-  __$FetchBookCopyWithImpl(this._self, this._then);
-
-  final _FetchBook _self;
-  final $Res Function(_FetchBook) _then;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? page = null,
-  }) {
-    return _then(_FetchBook(
-      page: null == page
-          ? _self.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return 'HomeEvent.fetchBook()';
   }
 }
 
@@ -184,7 +140,11 @@ class Loading implements HomeState {
 /// @nodoc
 
 class Loaded implements HomeState {
-  const Loaded(final List<Book> books) : _books = books;
+  const Loaded(
+      {required final List<Book> books,
+      required this.page,
+      required this.hasReachedMax})
+      : _books = books;
 
   final List<Book> _books;
   List<Book> get books {
@@ -192,6 +152,9 @@ class Loaded implements HomeState {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_books);
   }
+
+  final int page;
+  final bool hasReachedMax;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -205,16 +168,19 @@ class Loaded implements HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Loaded &&
-            const DeepCollectionEquality().equals(other._books, _books));
+            const DeepCollectionEquality().equals(other._books, _books) &&
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.hasReachedMax, hasReachedMax) ||
+                other.hasReachedMax == hasReachedMax));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_books));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_books), page, hasReachedMax);
 
   @override
   String toString() {
-    return 'HomeState.loaded(books: $books)';
+    return 'HomeState.loaded(books: $books, page: $page, hasReachedMax: $hasReachedMax)';
   }
 }
 
@@ -223,7 +189,7 @@ abstract mixin class $LoadedCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
       _$LoadedCopyWithImpl;
   @useResult
-  $Res call({List<Book> books});
+  $Res call({List<Book> books, int page, bool hasReachedMax});
 }
 
 /// @nodoc
@@ -238,12 +204,22 @@ class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? books = null,
+    Object? page = null,
+    Object? hasReachedMax = null,
   }) {
     return _then(Loaded(
-      null == books
+      books: null == books
           ? _self._books
           : books // ignore: cast_nullable_to_non_nullable
               as List<Book>,
+      page: null == page
+          ? _self.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasReachedMax: null == hasReachedMax
+          ? _self.hasReachedMax
+          : hasReachedMax // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
