@@ -15,63 +15,193 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$HomeEvent {
+  String? get query;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $HomeEventCopyWith<HomeEvent> get copyWith =>
+      _$HomeEventCopyWithImpl<HomeEvent>(this as HomeEvent, _$identity);
+
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is HomeEvent);
+        (other.runtimeType == runtimeType &&
+            other is HomeEvent &&
+            (identical(other.query, query) || other.query == query));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, query);
 
   @override
   String toString() {
-    return 'HomeEvent()';
+    return 'HomeEvent(query: $query)';
   }
 }
 
 /// @nodoc
-class $HomeEventCopyWith<$Res> {
-  $HomeEventCopyWith(HomeEvent _, $Res Function(HomeEvent) __);
+abstract mixin class $HomeEventCopyWith<$Res> {
+  factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) _then) =
+      _$HomeEventCopyWithImpl;
+  @useResult
+  $Res call({String? query});
+}
+
+/// @nodoc
+class _$HomeEventCopyWithImpl<$Res> implements $HomeEventCopyWith<$Res> {
+  _$HomeEventCopyWithImpl(this._self, this._then);
+
+  final HomeEvent _self;
+  final $Res Function(HomeEvent) _then;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? query = freezed,
+  }) {
+    return _then(_self.copyWith(
+      query: freezed == query
+          ? _self.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _FetchBook implements HomeEvent {
-  const _FetchBook();
+  const _FetchBook({this.query});
+
+  @override
+  final String? query;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$FetchBookCopyWith<_FetchBook> get copyWith =>
+      __$FetchBookCopyWithImpl<_FetchBook>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _FetchBook);
+        (other.runtimeType == runtimeType &&
+            other is _FetchBook &&
+            (identical(other.query, query) || other.query == query));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, query);
 
   @override
   String toString() {
-    return 'HomeEvent.fetchBook()';
+    return 'HomeEvent.fetchBook(query: $query)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$FetchBookCopyWith<$Res>
+    implements $HomeEventCopyWith<$Res> {
+  factory _$FetchBookCopyWith(
+          _FetchBook value, $Res Function(_FetchBook) _then) =
+      __$FetchBookCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String? query});
+}
+
+/// @nodoc
+class __$FetchBookCopyWithImpl<$Res> implements _$FetchBookCopyWith<$Res> {
+  __$FetchBookCopyWithImpl(this._self, this._then);
+
+  final _FetchBook _self;
+  final $Res Function(_FetchBook) _then;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? query = freezed,
+  }) {
+    return _then(_FetchBook(
+      query: freezed == query
+          ? _self.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 
 /// @nodoc
 
-class _Test implements HomeEvent {
-  const _Test();
+class _LoadMore implements HomeEvent {
+  const _LoadMore({this.query});
+
+  @override
+  final String? query;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$LoadMoreCopyWith<_LoadMore> get copyWith =>
+      __$LoadMoreCopyWithImpl<_LoadMore>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Test);
+        (other.runtimeType == runtimeType &&
+            other is _LoadMore &&
+            (identical(other.query, query) || other.query == query));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, query);
 
   @override
   String toString() {
-    return 'HomeEvent.test()';
+    return 'HomeEvent.loadMore(query: $query)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$LoadMoreCopyWith<$Res>
+    implements $HomeEventCopyWith<$Res> {
+  factory _$LoadMoreCopyWith(_LoadMore value, $Res Function(_LoadMore) _then) =
+      __$LoadMoreCopyWithImpl;
+  @override
+  @useResult
+  $Res call({String? query});
+}
+
+/// @nodoc
+class __$LoadMoreCopyWithImpl<$Res> implements _$LoadMoreCopyWith<$Res> {
+  __$LoadMoreCopyWithImpl(this._self, this._then);
+
+  final _LoadMore _self;
+  final $Res Function(_LoadMore) _then;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? query = freezed,
+  }) {
+    return _then(_LoadMore(
+      query: freezed == query
+          ? _self.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
   }
 }
 

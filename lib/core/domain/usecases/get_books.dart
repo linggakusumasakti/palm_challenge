@@ -6,7 +6,7 @@ class GetBooks {
 
   GetBooks({required this.repository});
 
-  Future<List<Book>> call({int page = 1}) {
-    return repository.getBooks(page: page);
+  Future<List<Book>> call({int page = 1, String? search}) {
+    return repository.getBooks(page: page, search: search);
   }
 }

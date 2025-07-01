@@ -7,10 +7,14 @@ import '../widgets/book_card.dart';
 
 class BooksSection extends StatefulWidget {
   const BooksSection(
-      {super.key, required this.books, required this.hasReachedMax});
+      {super.key,
+      required this.books,
+      required this.hasReachedMax,
+      required this.query});
 
   final List<Book> books;
   final bool hasReachedMax;
+  final String query;
 
   @override
   BookSectionState createState() => BookSectionState();
@@ -27,7 +31,7 @@ class BookSectionState extends State<BooksSection> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<HomeBloc>().add(const HomeEvent.fetchBook());
+      context.read<HomeBloc>().add(HomeEvent.loadMore(query: widget.query));
     }
   }
 
@@ -46,26 +50,24 @@ class BookSectionState extends State<BooksSection> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListView.separated(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(16),
-        itemCount: widget.hasReachedMax
-            ? widget.books.length
-            : widget.books.length + 1,
-        separatorBuilder: (_, __) => const SizedBox(height: 12),
-        itemBuilder: (context, index) {
-          if (index >= widget.books.length) {
-            return const Center(
-                child: Padding(
-              padding: EdgeInsets.all(8),
-              child: CircularProgressIndicator(),
-            ));
-          }
-          final book = widget.books[index];
-          return BookCard(book: book);
-        },
-      ),
+    return ListView.separated(
+      controller: _scrollController,
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(16),
+      itemCount:
+          widget.hasReachedMax ? widget.books.length : widget.books.length + 1,
+      separatorBuilder: (_, __) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        if (index >= widget.books.length) {
+          return const Center(
+              child: Padding(
+            padding: EdgeInsets.all(8),
+            child: CircularProgressIndicator(),
+          ));
+        }
+        final book = widget.books[index];
+        return BookCard(book: book);
+      },
     );
   }
 }

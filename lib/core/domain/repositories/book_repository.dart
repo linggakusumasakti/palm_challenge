@@ -6,7 +6,7 @@ import '../../data/utils/connection_checker.dart';
 import '../entities/book.dart';
 
 abstract class BookRepository {
-  Future<List<Book>> getBooks({int page = 1});
+  Future<List<Book>> getBooks({int page = 1, String? search});
 }
 
 class BookRepositoryImpl implements BookRepository {
@@ -21,12 +21,12 @@ class BookRepositoryImpl implements BookRepository {
   });
 
   @override
-  Future<List<Book>> getBooks({int page = 1}) async {
+  Future<List<Book>> getBooks({int page = 1, String? search}) async {
     final isOnline = await connectionChecker.isConnected;
 
     if (isOnline) {
       try {
-        final remoteData = await remoteDataSource.getBooks(page: page);
+        final remoteData = await remoteDataSource.getBooks(page: page, search: search);
         await localDataSource.saveBooks(remoteData.toTableModelList());
         return remoteData.map((e) => e.toEntity()).toList();
       } catch (e) {
