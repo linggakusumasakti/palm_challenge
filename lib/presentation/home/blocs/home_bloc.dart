@@ -19,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         case _FetchBook(:final page):
           emit(const HomeState.loading());
           try {
-            final books = await getBooks(page: page);
+            final books = await getBooks.call(page: page);
             emit(HomeState.loaded(books));
           } catch (e) {
             emit(HomeState.error(e.toString()));

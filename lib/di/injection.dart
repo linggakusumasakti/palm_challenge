@@ -4,6 +4,9 @@ import 'package:palm_challenge/core/domain/repositories/book_repository.dart';
 import 'package:palm_challenge/core/domain/usecases/get_books.dart';
 import 'package:palm_challenge/presentation/home/blocs/home_bloc.dart';
 
+import '../core/data/datasources/local_data_source.dart';
+import '../core/data/utils/connection_checker.dart';
+
 final locator = GetIt.instance;
 
 void init() {
@@ -12,10 +15,14 @@ void init() {
   //use cases
   locator.registerLazySingleton(() => GetBooks(repository: locator()));
 
-  // remote data source
+  // data source
   locator.registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImpl());
+  locator.registerLazySingleton<LocalDataSource>(() => LocalDataSourceImpl());
+  locator.registerLazySingleton<ConnectionChecker>(() => ConnectionCheckerImpl());
 
   // repository
-  locator.registerLazySingleton<BookRepository>(
-      () => BookRepositoryImpl(remoteDataSource: locator()));
+  locator.registerLazySingleton<BookRepository>(() => BookRepositoryImpl(
+      remoteDataSource: locator(),
+      localDataSource: locator(),
+      connectionChecker: locator()));
 }
