@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palm_challenge/core/domain/entities/book.dart';
+import 'package:palm_challenge/routes/routes.dart';
 
 import '../blocs/home_bloc.dart';
 import '../widgets/book_card.dart';
@@ -66,7 +67,11 @@ class BookSectionState extends State<BooksSection> {
           ));
         }
         final book = widget.books[index];
-        return BookCard(book: book);
+        return InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, Routes.detail, arguments: book);
+          },
+            child: BookCard(book: book));
       },
     );
   }

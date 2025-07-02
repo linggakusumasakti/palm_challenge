@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:palm_challenge/core/data/utils/ext/num.dart';
 
 import '../../../core/domain/entities/book.dart';
 
@@ -95,7 +95,6 @@ class _BookInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formatter = NumberFormat.decimalPattern('id');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,7 +121,7 @@ class _BookInfo extends StatelessWidget {
             const Icon(Icons.download_rounded, color: Colors.black87, size: 16),
             const SizedBox(width: 4),
             Text(
-              formatter.format(downloadCount),
+              downloadCount.toFormattedNumber(),
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
