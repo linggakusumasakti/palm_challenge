@@ -7,6 +7,10 @@ import '../entities/book.dart';
 
 abstract class BookRepository {
   Future<List<Book>> getBooks({int page = 1, String? search});
+
+  Future<void> likedBook(Book book);
+
+  Future<bool> isBookLiked(int bookId);
 }
 
 class BookRepositoryImpl implements BookRepository {
@@ -26,7 +30,8 @@ class BookRepositoryImpl implements BookRepository {
 
     if (isOnline) {
       try {
-        final remoteData = await remoteDataSource.getBooks(page: page, search: search);
+        final remoteData =
+            await remoteDataSource.getBooks(page: page, search: search);
         await localDataSource.saveBooks(remoteData.toTableModelList());
         return remoteData.map((e) => e.toEntity()).toList();
       } catch (e) {
@@ -38,4 +43,14 @@ class BookRepositoryImpl implements BookRepository {
       return localData.map((e) => e.toEntity()).toList();
     }
   }
+
+  @override
+  Future<void> likedBook(Book book) async {
+    final data = book.toEntity();
+    await localDataSource.likeBook(data);
+  }
+
+  @override
+  Future<bool> isBookLiked(int bookId) async =>
+      await localDataSource.isBookLiked(bookId);
 }

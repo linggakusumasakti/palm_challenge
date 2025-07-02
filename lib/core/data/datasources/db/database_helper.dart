@@ -7,8 +7,10 @@ class DatabaseHelper {
   static const _dbName = 'books.db';
   static const _dbVersion = 1;
   static const tableBooks = 'books';
+  static const tableLikeBooks = 'like_books';
 
   static final DatabaseHelper instance = DatabaseHelper._internal();
+
   DatabaseHelper._internal();
 
   Database? _database;
@@ -40,6 +42,21 @@ class DatabaseHelper {
         copyright INTEGER
       )
     ''');
+    await db.execute('''
+      CREATE TABLE $tableLikeBooks (
+        id INTEGER PRIMARY KEY,
+        title TEXT,
+        authorsJson TEXT,
+        summariesJson TEXT,
+        subjectsJson TEXT,
+        bookshelvesJson TEXT,
+        languagesJson TEXT,
+        downloadCount INTEGER,
+        formatsJson TEXT,
+        mediaType TEXT,
+        copyright INTEGER
+      )
+    ''');
   }
 
   Future<void> insertBooks(List<BookTableModel> books) async {
@@ -55,10 +72,35 @@ class DatabaseHelper {
     await batch.commit(noResult: true);
   }
 
-  Future<List<BookTableModel>> getBooks() async {
+  Future<void> insertLikedBook(BookTableModel book) async {
     final db = await database;
-    final maps = await db.query(tableBooks);
+    await db.insert(tableLikeBooks, book.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<void> deleteLikeBook(int bookId) async {
+    final db = await database;
+    await db.delete(
+      tableLikeBooks,
+      where: 'id = ?',
+      whereArgs: [bookId],
+    );
+  }
+
+  Future<List<BookTableModel>> getBooks(String table) async {
+    final db = await database;
+    final maps = await db.query(table);
     return maps.map((e) => BookTableModel.fromJson(e)).toList();
+  }
+
+  Future<bool> isBookLiked(int bookId) async {
+    final db = await database;
+    final result = await db.query(
+      tableLikeBooks,
+      where: 'id = ?',
+      whereArgs: [bookId],
+    );
+    return result.isNotEmpty;
   }
 
   Future<void> clearBooks() async {

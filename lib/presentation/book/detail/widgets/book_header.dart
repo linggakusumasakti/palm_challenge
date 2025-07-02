@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:palm_challenge/core/domain/entities/book.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/domain/entities/book.dart';
+import '../blocs/detail_book_bloc.dart';
 
 class BookHeader extends StatelessWidget {
   final Book book;
@@ -31,15 +34,31 @@ class BookHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.arrow_back)),
-                Icon(Icons.favorite_border),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(Icons.arrow_back),
+                ),
+                BlocBuilder<DetailBookBloc, DetailBookState>(
+                  builder: (context, state) {
+                    final isLiked = state is Success && state.isLiked;
+                    return InkWell(
+                      onTap: () {
+                        context
+                            .read<DetailBookBloc>()
+                            .add(DetailBookEvent.likeBook(book));
+                      },
+                      child: Icon(
+                        isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: isLiked ? Colors.red : Colors.grey,
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

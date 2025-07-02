@@ -6,6 +6,12 @@ abstract class LocalDataSource {
   Future<void> saveBooks(List<BookTableModel> books);
 
   Future<List<BookTableModel>> getBooks();
+
+  Future<void> likeBook(BookTableModel book);
+
+  Future<List<BookTableModel>> getLikedBooks();
+
+  Future<bool> isBookLiked(int bookId);
 }
 
 class LocalDataSourceImpl implements LocalDataSource {
@@ -19,6 +25,26 @@ class LocalDataSourceImpl implements LocalDataSource {
 
   @override
   Future<List<BookTableModel>> getBooks() async {
-    return await dbHelper.getBooks();
+    return await dbHelper.getBooks(DatabaseHelper.tableBooks);
+  }
+
+  @override
+  Future<void> likeBook(BookTableModel book) async {
+    final isLiked = await dbHelper.isBookLiked(book.id);
+    if (isLiked) {
+      await dbHelper.deleteLikeBook(book.id);
+    } else {
+      await dbHelper.insertLikedBook(book);
+    }
+  }
+
+  @override
+  Future<List<BookTableModel>> getLikedBooks() async {
+    return await dbHelper.getBooks(DatabaseHelper.tableLikeBooks);
+  }
+
+  @override
+  Future<bool> isBookLiked(int bookId) async {
+    return await dbHelper.isBookLiked(bookId);
   }
 }

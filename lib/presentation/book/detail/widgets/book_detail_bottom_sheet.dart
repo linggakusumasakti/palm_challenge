@@ -19,8 +19,8 @@ class BookDetailBottomSheet extends StatelessWidget {
 
     return DraggableScrollableSheet(
       initialChildSize: 0.6,
-      minChildSize: 0.3,
-      maxChildSize: 0.95,
+      minChildSize: 0.6,
+      maxChildSize: 0.85,
       builder: (context, scrollController) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),

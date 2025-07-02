@@ -61,6 +61,24 @@ extension BookTableModelToEntity on BookTableModel {
   }
 }
 
+extension BookToEntity on Book {
+  BookTableModel toEntity() {
+    return BookTableModel(
+      id: id,
+      title: title,
+      authorsJson: jsonEncode(authors.map((e) => e.toJson()).toList()),
+      summariesJson: jsonEncode(summaries),
+      subjectsJson: jsonEncode(subjects),
+      bookshelvesJson: jsonEncode(bookshelves),
+      languagesJson: jsonEncode(languages),
+      downloadCount: downloadCount,
+      formatsJson: jsonEncode(formats),
+      mediaType: mediaType,
+      copyright: (copyright ?? false) ? 1 : 0,
+    );
+  }
+}
+
 extension BookModelListMapper on List<BookModel> {
   List<BookTableModel> toTableModelList() {
     return map((book) => book.toTableModel()).toList();
