@@ -10,7 +10,9 @@ abstract class RemoteDataSource {
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
-  final dioConfig = DioConfig(baseUrl: 'https://gutendex.com');
+  final DioConfig dioConfig;
+
+  RemoteDataSourceImpl(this.dioConfig);
 
   @override
   Future<List<BookModel>> getBooks({int page = 1, String? search}) async {
