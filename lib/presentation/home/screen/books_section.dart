@@ -8,11 +8,16 @@ import '../widgets/book_card.dart';
 
 class BooksSection extends StatefulWidget {
   const BooksSection(
-      {super.key, required this.books, this.hasReachedMax, this.query});
+      {super.key,
+      required this.books,
+      this.hasReachedMax,
+      this.query,
+      this.isDisablePagination});
 
   final List<Book> books;
   final bool? hasReachedMax;
   final String? query;
+  final bool? isDisablePagination;
 
   @override
   BookSectionState createState() => BookSectionState();
@@ -24,7 +29,9 @@ class BookSectionState extends State<BooksSection> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+    if (!(widget.isDisablePagination ?? false)) {
+      _scrollController.addListener(_onScroll);
+    }
   }
 
   void _onScroll() {

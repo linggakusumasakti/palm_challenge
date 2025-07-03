@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:palm_challenge/presentation/book/liked/blocs/liked_books_bloc.dart';
 
 import '../../../home/screen/books_section.dart';
@@ -10,25 +9,21 @@ class LikedBooksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetIt.instance<LikedBooksBloc>()
-        ..add(LikedBooksEvent.getLikedBooks()),
-      child: BlocBuilder<LikedBooksBloc, LikedBooksState>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              title: Text('Liked Books',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(fontWeight: FontWeight.bold)),
-            ),
+    return BlocBuilder<LikedBooksBloc, LikedBooksState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
             backgroundColor: Colors.white,
-            body: _buildContent(state, context),
-          );
-        },
-      ),
+            title: Text('Liked Books',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold)),
+          ),
+          backgroundColor: Colors.white,
+          body: _buildContent(state, context),
+        );
+      },
     );
   }
 
@@ -40,6 +35,7 @@ class LikedBooksScreen extends StatelessWidget {
         return BooksSection(
           books: books,
           hasReachedMax: true,
+          isDisablePagination: true,
         );
       case Empty _:
         return Center(
