@@ -11,6 +11,8 @@ abstract class BookRepository {
   Future<void> likedBook(Book book);
 
   Future<bool> isBookLiked(int bookId);
+
+  Future<List<Book>> getLikedBooks();
 }
 
 class BookRepositoryImpl implements BookRepository {
@@ -53,4 +55,10 @@ class BookRepositoryImpl implements BookRepository {
   @override
   Future<bool> isBookLiked(int bookId) async =>
       await localDataSource.isBookLiked(bookId);
+
+  @override
+  Future<List<Book>> getLikedBooks() async {
+    final data = await localDataSource.getLikedBooks();
+    return data.map((e) => e.toEntity()).toList();
+  }
 }

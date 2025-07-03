@@ -8,14 +8,11 @@ import '../widgets/book_card.dart';
 
 class BooksSection extends StatefulWidget {
   const BooksSection(
-      {super.key,
-      required this.books,
-      required this.hasReachedMax,
-      required this.query});
+      {super.key, required this.books, this.hasReachedMax, this.query});
 
   final List<Book> books;
-  final bool hasReachedMax;
-  final String query;
+  final bool? hasReachedMax;
+  final String? query;
 
   @override
   BookSectionState createState() => BookSectionState();
@@ -55,8 +52,9 @@ class BookSectionState extends State<BooksSection> {
       controller: _scrollController,
       shrinkWrap: true,
       padding: const EdgeInsets.all(16),
-      itemCount:
-          widget.hasReachedMax ? widget.books.length : widget.books.length + 1,
+      itemCount: (widget.hasReachedMax ?? false)
+          ? widget.books.length
+          : widget.books.length + 1,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         if (index >= widget.books.length) {
@@ -68,9 +66,9 @@ class BookSectionState extends State<BooksSection> {
         }
         final book = widget.books[index];
         return InkWell(
-          onTap: () {
-            Navigator.pushNamed(context, Routes.detail, arguments: book);
-          },
+            onTap: () {
+              Navigator.pushNamed(context, Routes.detail, arguments: book);
+            },
             child: BookCard(book: book));
       },
     );

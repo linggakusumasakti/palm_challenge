@@ -2,9 +2,11 @@ import 'package:get_it/get_it.dart';
 import 'package:palm_challenge/core/data/datasources/remote_data_source.dart';
 import 'package:palm_challenge/core/domain/repositories/book_repository.dart';
 import 'package:palm_challenge/core/domain/usecases/get_books.dart';
+import 'package:palm_challenge/core/domain/usecases/get_liked_books.dart';
 import 'package:palm_challenge/core/domain/usecases/is_book_liked.dart';
 import 'package:palm_challenge/core/domain/usecases/like_book.dart';
 import 'package:palm_challenge/presentation/book/detail/blocs/detail_book_bloc.dart';
+import 'package:palm_challenge/presentation/book/liked/blocs/liked_books_bloc.dart';
 import 'package:palm_challenge/presentation/home/blocs/home_bloc.dart';
 
 import '../core/data/datasources/local_data_source.dart';
@@ -17,10 +19,12 @@ void init() {
   locator.registerFactory<HomeBloc>(() => HomeBloc(locator()));
   locator.registerFactory<DetailBookBloc>(
       () => DetailBookBloc(locator(), locator()));
+  locator.registerFactory<LikedBooksBloc>(() => LikedBooksBloc(locator()));
   //use cases
   locator.registerLazySingleton(() => GetBooks(repository: locator()));
   locator.registerLazySingleton(() => LikeBook(repository: locator()));
   locator.registerLazySingleton(() => IsBookLiked(repository: locator()));
+  locator.registerLazySingleton(() => GetLikedBooks(repository: locator()));
 
   // data source
   locator.registerLazySingleton<RemoteDataSource>(() => RemoteDataSourceImpl());

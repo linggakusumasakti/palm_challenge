@@ -37,11 +37,17 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Card(
-        elevation: 3,
-        shadowColor: Colors.black.withValues(alpha: 0.1),
-        shape: RoundedRectangleBorder(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: TextField(
           controller: widget.controller,
@@ -51,7 +57,7 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
             hintText: widget.hintText,
             prefixIcon: const Icon(Icons.search),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(
@@ -60,7 +66,8 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
             ),
           ),
         ),
-      ),
+      )
+      ,
     );
   }
 }
