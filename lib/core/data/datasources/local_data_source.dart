@@ -15,7 +15,9 @@ abstract class LocalDataSource {
 }
 
 class LocalDataSourceImpl implements LocalDataSource {
-  final dbHelper = DatabaseHelper.instance;
+  final DatabaseHelper dbHelper;
+
+  LocalDataSourceImpl(this.dbHelper);
 
   @override
   Future<void> saveBooks(List<BookTableModel> books) async {
