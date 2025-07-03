@@ -6,40 +6,28 @@ part of 'book_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_BookModel _$BookModelFromJson(Map<String, dynamic> json) => _BookModel(
+BookModel _$BookModelFromJson(Map<String, dynamic> json) => BookModel(
       id: (json['id'] as num).toInt(),
       title: json['title'] as String,
-      authors: (json['authors'] as List<dynamic>?)
-              ?.map((e) => AuthorModel.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      summaries: (json['summaries'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      subjects: (json['subjects'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      bookshelves: (json['bookshelves'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      languages: (json['languages'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      authors: (json['authors'] as List<dynamic>)
+          .map((e) => AuthorModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      summaries:
+          (json['summaries'] as List<dynamic>).map((e) => e as String).toList(),
+      subjects:
+          (json['subjects'] as List<dynamic>).map((e) => e as String).toList(),
+      bookshelves: (json['bookshelves'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      languages:
+          (json['languages'] as List<dynamic>).map((e) => e as String).toList(),
       downloadCount: (json['download_count'] as num).toInt(),
-      formats: (json['formats'] as Map<String, dynamic>?)?.map(
-            (k, e) => MapEntry(k, e as String),
-          ) ??
-          const {},
+      formats: Map<String, String>.from(json['formats'] as Map),
       mediaType: json['media_type'] as String?,
       copyright: json['copyright'] as bool?,
     );
 
-Map<String, dynamic> _$BookModelToJson(_BookModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BookModelToJson(BookModel instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'authors': instance.authors,
